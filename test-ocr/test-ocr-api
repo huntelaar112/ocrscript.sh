@@ -1,0 +1,55 @@
+#!/bin/bash
+
+set -e
+done=no
+
+source $(which logshell)
+source $(which dsutils)
+
+endpointlink="${1}"
+tokenkey="${2}"
+rootvolume=$(pwd)
+
+#Trust server for test API
+trustconfig="[TRUST_SERVER]
+url = https://pgekyc.pgbank.com.vn:8443/mobile/ekyc/GetOCRConfirmation
+method = POST
+client_id = 99996
+in_use = True
+authen_timeout = 10
+request_timeout = 2"
+
+# [ -e "${rootvolume}/../imgstest/*.jpg" ] || {
+
+[ -z "$(ls -A "${rootvolume}/imgstest")" ] && {
+  log-warning "There is no photo in the path ${rootvolume}/imgstest/ to test"
+  exit 1
+}
+
+#if have image test --> test API
+log-info "Checking api's ${CONNAME}..."
+
+cnt=0
+while :; do
+  respone="$(
+    curl -s --location --request POST "${endpointlink}" \
+      --header "api-key: ${tokenkey} " \
+      --form "file=@\"${rootvolume}/imgstest/image.jpg.vnhff\""
+  )"
+  #    --form "image1=@\"${rootvolume}/imgstest/id-front.jpg\"" --form "image2=@\"${rootvolume}/imgstest/id-back.jpg\"" --form 'encode=1' --form 'deviceid=like')"
+  ((cnt = cnt + 1))
+  echo "${respone}" | grep -Ee '"result_code"' && {
+    log-info "Success calls API to new containers"
+    done=yes
+    break
+  } || {
+    echo -n " ."
+    ((cnt > 5)) && {
+      log-debug "Error call API to new containers"
+      echo "${respone}"
+      EXITEVAL="roolback"
+      break
+    }
+  }
+  sleep 2
+done

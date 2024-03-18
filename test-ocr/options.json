@@ -1,0 +1,16 @@
+{
+	"detector": "1",
+	"stamps": "1",
+	"get_img": "11",
+	"remove_stamps": "1",
+	"remove_dots": "1",
+	"detect_checkbox":"1",
+	"rotate": "1",
+	"auto_crop": "1",
+	"detect_table": "1",
+	"dictionary_info": {
+		"dictionary_id": "1000320003_name",
+		"correct_threshold": 0.7
+	}
+}
+

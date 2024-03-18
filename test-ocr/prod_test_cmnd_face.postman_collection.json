@@ -1,0 +1,101 @@
+{
+	"info": {
+		"_postman_id": "94642338-88b7-4fdc-ab1e-9b3993347e61",
+		"name": "prod_test_cmnd_face",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18193475"
+	},
+	"item": [
+		{
+			"name": "idfull Copy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "api-key",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image1",
+							"type": "file",
+							"src": "/Users/hieu2802/Work/api/cmnd/test/data_test/CMND_moi_fs.jpg"
+						},
+						{
+							"key": "image2",
+							"type": "file",
+							"src": "/Users/hieu2802/Work/api/cmnd/test/data_test/CMND_moi_bs.jpg"
+						},
+						{
+							"key": "encode",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://stgapi.smartocr.vn/idfull/v1/recognition",
+					"protocol": "https",
+					"host": [
+						"stgapi",
+						"smartocr",
+						"vn"
+					],
+					"path": [
+						"idfull",
+						"v1",
+						"recognition"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "compare Copy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "api-key",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image1",
+							"type": "file",
+							"src": "/Users/hieu2802/Work/api/face/test/data_test/biden1.jpeg"
+						},
+						{
+							"key": "image2",
+							"type": "file",
+							"src": "/Users/hieu2802/Work/api/face/test/data_test/biden2.jpeg"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://stgapi.smartocr.vn/face/v1/recognition",
+					"protocol": "https",
+					"host": [
+						"stgapi",
+						"smartocr",
+						"vn"
+					],
+					"path": [
+						"face",
+						"v1",
+						"recognition"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

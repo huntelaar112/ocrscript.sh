@@ -1,0 +1,46 @@
+#!/bin/bash
+#author thanhson.rf@gmail.com
+function echo-white() { printf "\n\033[0;37m${*}\n\033[0m"; }
+function echo-purple() { printf "\n\033[0;35m${*}\n\033[0m"; }
+function echo-red() { printf "\n\033[0;31m${*}\n\033[0m"; }
+function echo-blue() { printf "\n\033[0;34m${*}\n\033[0m"; }
+function echo-yellow() { printf "\n\033[0;33m${*}\n\033[0m"; }
+function echo-greenu() { printf "\n\033[4;32m${*}\n\033[0m"; }
+# export -f echo-greenu1
+# export -f echo-white
+# export -f echo-yellow
+# export -f echo-blue
+# export -f echo-purple
+# export -f echo-red
+
+function timespec() {
+#   STAMP="$(echo $(date +"%b %d %T %:z") $(hostname)) "
+#   STAMP="$(echo $(date +"%b %d %T %:z"))"
+   STAMP="$(date +"%F %T,%3N")"
+   echo "${STAMP}"
+}
+
+# ${*} bundled "arr1 arr2 ... arrn", ${@}: separate "arr1" "arr2" ... "arrn"
+function log-info(){
+    echo-white "$(timespec)[info] ${*}"
+}
+
+function log-warning(){
+    echo-purple "$(timespec)[warr] ${*}"
+}
+
+function log-error(){
+    echo-red "$(timespec)[err] ${*}"
+}
+
+function log-debug(){
+    echo-blue  "$(timespec)[dbg] ${*}"
+}
+
+function log-run(){
+    echo-yellow "$(timespec)[run] ${*}"
+}
+
+function log-step(){
+    echo-greenu "$(timespec)[step] ${*}"
+}

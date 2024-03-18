@@ -1,0 +1,139 @@
+#!/bin/bash
+
+# 1. map <date.time> in log file --> put to folder
+# 2. use <date.time> above to find conresponse image --> put to same folder
+
+
+set -e
+#set -u
+#set -u
+done=no
+exitval=0
+currentfolder=$PWD
+source "$(which logshell)"
+
+if [[ -e ./CornerErr ]]; then
+  rm -rf ./CornerErr
+  mkdir ./CornerErr
+fi
+
+if [[ -e ./CaptureErr ]]; then
+  rm -rf ./CaptureErr
+  mkdir ./CaptureErr
+fi
+
+if [[ -e ./PastedOverErr ]]; then
+  rm -rf ./PastedOverErr
+  mkdir ./PastedOverErr
+fi
+
+if [[ -e ./BlurErr ]]; then
+  rm -rf ./BlurErr
+  mkdir ./BlurErr
+fi
+
+[[ -d ./CaptureErr ]] || {
+  mkdir ./CaptureErr
+}
+
+[[ -d ./CornerErr ]] || {
+  mkdir ./CornerErr
+}
+
+[[ -d ./PastedOverErr ]] || {
+  mkdir ./PastedOverErr
+}
+
+[[ -d ./BlurErr ]] || {
+  mkdir ./BlurErr
+}
+
+cat app-20230225_10.log | grep "Corner Check Fail" >./CornerErr/CornerErr.txt
+cat app-20230225_10.log | grep "Captured Through Screen" >./CaptureErr/CaptureErr.txt
+cat app-20230225_10.log | grep "Back Image Is Blur" >./BlurErr/BlurErr.txt
+cat app-20230225_10.log | grep "One Or More Fields Is Pasted Over" >./PastedOverErr/PastedOverErr.txt
+
+log-info "Processing Corner Check Fail ERR..."
+cat ./CornerErr/CornerErr.txt | while read i; do
+  imagedatetime_hour=$(echo $i | cut -b 13-20)
+  imagedatetime="2023-02-18 ${imagedatetime_hour}"
+  imagedatetime1=$(date +%s --date="$imagedatetime")
+  imagedatetime1=$(date '+%T' --date="@$((imagedatetime1 + 1))")
+  imagedatetime2=$(date +%s --date="$imagedatetime")
+  imagedatetime2=$(date '+%T' --date="@$((imagedatetime2 - 1))")
+  imagedatetime3=$(date +%s --date="$imagedatetime")
+  imagedatetime3=$(date '+%T' --date="@$((imagedatetime3 - 2))")
+  imagedatetime4=$(date +%s --date="$imagedatetime")
+  imagedatetime4=$(date '+%T' --date="@$((imagedatetime4 + 2))")
+  #last2num=${mynum:6:7}
+  mkdir -p ./CornerErr/${imagedatetime_hour}
+  echo "${i}" >./CornerErr/${imagedatetime_hour}/"${imagedatetime_hour}.log"
+  filename=$(ls -lhastp --full-time | grep -v / | tail -n +2 | grep -E "${imagedatetime_hour}|${imagedatetime1}|${imagedatetime2}" | rev | cut -d ' ' -f 1 | rev)
+  echo $filename
+  echo $
+  [[ -z ${filename} ]] || {
+    cp ${filename} ./CornerErr/${imagedatetime_hour}
+  }
+done
+
+log-info "Processing Captured Through Screen ERR..."
+cat ./CaptureErr/CaptureErr.txt | while read i; do
+  imagedatetime_hour=$(echo $i | cut -b 13-20)
+  imagedatetime="2023-02-18 ${imagedatetime_hour}"
+  imagedatetime1=$(date +%s --date="$imagedatetime")
+  imagedatetime1=$(date '+%T' --date="@$((imagedatetime1 + 1))")
+  imagedatetime2=$(date +%s --date="$imagedatetime")
+  imagedatetime2=$(date '+%T' --date="@$((imagedatetime2 - 1))")
+  #last2num=${mynum:6:7}
+  mkdir -p ./CaptureErr/${imagedatetime_hour}
+  echo "${i}" >./CaptureErr/${imagedatetime_hour}/"${imagedatetime_hour}.log"
+  filename=$(ls -lhastp --full-time | grep -v / | tail -n +2 | grep -E "${imagedatetime_hour}|${imagedatetime1}|${imagedatetime2}" | rev | cut -d ' ' -f 1 | rev)
+  #filename=$(ls -lhastp --full-time | grep -v / | tail -n +2 | grep -E "${imagedatetime_hour}|${imagedatetime1}|${imagedatetime2}" | cut -d ' ' -f 12)
+  echo $filename
+  echo $
+  [[ -z ${filename} ]] || {
+    cp ${filename} ./CaptureErr/${imagedatetime_hour}
+  }
+done
+
+log-info "Processing Back Image Is Blur ERR..."
+cat ./BlurErr/BlurErr.txt | while read i; do
+  imagedatetime_hour=$(echo $i | cut -b 13-20)
+  imagedatetime="2023-02-18 ${imagedatetime_hour}"
+  imagedatetime1=$(date +%s --date="$imagedatetime")
+  imagedatetime1=$(date '+%T' --date="@$((imagedatetime1 + 1))")
+  imagedatetime2=$(date +%s --date="$imagedatetime")
+  imagedatetime2=$(date '+%T' --date="@$((imagedatetime2 - 1))")
+  #last2num=${mynum:6:7}
+  mkdir -p ./BlurErr/${imagedatetime_hour}
+  echo "${i}" >./BlurErr/${imagedatetime_hour}/"${imagedatetime_hour}.log"
+  filename=$(ls -lhastp --full-time | grep -v / | tail -n +2 | grep -E "${imagedatetime_hour}|${imagedatetime1}|${imagedatetime2}" | rev | cut -d ' ' -f 1 | rev)
+  #filename=$(ls -lhastp --full-time | grep -v / | tail -n +2 | grep -E "${imagedatetime_hour}|${imagedatetime1}|${imagedatetime2}" | cut -d ' ' -f 12)
+  echo $filename
+  echo $
+  [[ -z ${filename} ]] || {
+    cp ${filename} ./BlurErr/${imagedatetime_hour}
+  }
+done
+
+log-info "Processing One Or More Fields Is Pasted Over ERR..."
+cat ./PastedOverErr/PastedOverErr.txt | while read i; do
+  imagedatetime_hour=$(echo $i | cut -b 13-20)
+  imagedatetime="2023-02-18 ${imagedatetime_hour}"
+  imagedatetime1=$(date +%s --date="$imagedatetime")
+  imagedatetime1=$(date '+%T' --date="@$((imagedatetime1 + 1))")
+  imagedatetime2=$(date +%s --date="$imagedatetime")
+  imagedatetime2=$(date '+%T' --date="@$((imagedatetime2 - 1))")
+  #last2num=${mynum:6:7}
+  mkdir -p ./PastedOverErr/${imagedatetime_hour}
+  echo "${i}" >./PastedOverErr/${imagedatetime_hour}/"${imagedatetime_hour}.log"
+  filename=$(ls -lhastp --full-time | grep -v / | tail -n +2 | grep -E "${imagedatetime_hour}|${imagedatetime1}|${imagedatetime2}" | rev | cut -d ' ' -f 1 | rev)
+  #filename=$(ls -lhastp --full-time | grep -v / | tail -n +2 | grep -E "${imagedatetime_hour}|${imagedatetime1}|${imagedatetime2}" | cut -d ' ' -f 12)
+  echo $filename
+  echo $
+  [[ -z ${filename} ]] || {
+    cp ${filename} ./PastedOverErr/${imagedatetime_hour}
+  }
+done
+
+log-info "Done."

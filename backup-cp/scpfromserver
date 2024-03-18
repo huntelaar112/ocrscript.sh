@@ -1,0 +1,58 @@
+#!/bin/bash
+
+# use: scpfromserver servername <filename>
+# if not have filename --> default servername:/tmp/ocrData/data.zip
+
+#scrip:
+# if /tmp/ocrData exist --> delete its contents
+# scp from server, data save to /tmp/ocrData
+
+set -e
+done=no
+servername="${1}"
+serverpath="${2}"
+localpath="/home/mannk/ocrData"
+#EXITEVAL=""
+
+[[ ${servername} = "-h" ]] && {
+  echo "Usage: scpfromserver [servername] [link-to-datafile]
+If link-to-datafile is null --> use default: /tmp/ocrData/data.zip
+"
+  exit 0
+}
+
+[[ ${servername} == "ocrstgvn" ]] && {
+  servername="ocrstgvn-vncpu"
+}
+
+[[ ${servername} == "ocrprodvn" ]] && {
+  servername="ocrprodvn-2gpu"
+}
+
+source $(which logshell)
+source $(which dsutils)
+
+[ -z ${servername} ] && {
+  log-warning "Missing servername.
+Usage: scpfromserver [servername] [link-to-datafile]
+"
+  exit 1
+}
+
+[ -z ${serverpath} ] && {
+  log-warning "Missing linktodatafile --> use default datafile location(server): /tmp/ocrData/data.zip"
+  serverpath="/tmp/ocrData/data.zip"
+}
+
+[ -d  "${localpath}" ] && {
+  log-info "Delete content of ${localpath}..."
+  #rm -rf "${localpath}/{*,.*}"
+  rm -rf ${localpath}/*
+  #rm -rf ${localpath}/{*,.*}
+} || {
+  log-info "Create folder ${localpath}"
+  mkdir -p "${localpath}"
+}
+
+scp "${servername}:${serverpath}" ${localpath}
+done=yes

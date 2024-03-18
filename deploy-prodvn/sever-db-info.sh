@@ -1,0 +1,33 @@
+#!/bin/bash
+
+#MONGO and MYSQL STG
+[MONGO]
+MONGO_HOST=172.17.0.4
+MONGO_USER_PORT=27017
+MONGO_USERNAME=root
+MONGO_ROOT_PASSWORD=123456
+DATABASE=KYCDB
+AUTHSOURCE=admin
+
+[MYSQL]
+MYSQL_HOST=172.172.0.200
+MYSQL_PORT=3306
+MYSQL_USERNAME=ocr
+MYSQL_ROOT_PASSWORD=@#$Cdf-EFBG^
+DATABASE=OCR
+rootpass=53%FDFDF!pE$%
+
+#MYSQL PROD
+root@vnpff:/server/database/serv# cat db.ini
+[SERV]
+host=163.44.192.229
+port=3306
+user=root
+pwd=]pr5<8S5;RLrx+:"A)
+database=OCR
+
+#MONGO local PROD
+host=172.18.0.17
+port=27017
+user=root
+pwd=123456

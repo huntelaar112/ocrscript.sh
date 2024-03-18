@@ -1,0 +1,96 @@
+services:
+  printed_vie_detection:
+    image: vnpff_module_env-27022024-2.0.0 
+    ports:
+      - "5000:80"      
+    volumes:
+      - ./:/soc_proto
+    environment:
+      - CUDA_VISIBLE_DEVICES=0
+      - GPU_LIMIT=2048
+    working_dir: /soc_proto
+    command: "python -m proto_module.printed_vie_detection.server"
+
+  printed_vie_recognition:
+    image: vnpff_module_env-27022024-2.0.0 
+    ports:
+      - "5001:80"      
+    volumes:
+      - ./:/soc_proto
+    environment:
+      - CUDA_VISIBLE_DEVICES=0
+      - GPU_LIMIT=2048
+    working_dir: /soc_proto
+    command: "python -m proto_module.printed_vie_recognition.server"
+  
+  document_dewarping:
+    image: vnpff_module_env-27022024-2.0.0 
+    ports:
+      - "5002:80"    
+    volumes:
+      - ./:/soc_proto
+    environment:
+      - CUDA_VISIBLE_DEVICES=""
+      - GPU_LIMIT=1024
+    working_dir: /soc_proto
+    command: "python -m proto_module.document_dewarping.server"
+  
+  card_detection:
+    image: vnpff_module_env-27022024-2.0.0 
+    ports:
+      - "5003:80"    
+    volumes:
+      - ./:/soc_proto
+    environment:
+      - CUDA_VISIBLE_DEVICES=0
+      - GPU_LIMIT=512
+    working_dir: /soc_proto
+    command: "python -m proto_module.card_detection.server"
+    
+  document_layout_analysis:
+    image: vnpff_module_env-27022024-2.0.0 
+    ports:
+      - "5004:80"    
+    volumes:
+      - ./:/soc_proto
+    environment:
+      - CUDA_VISIBLE_DEVICES=""
+      - GPU_LIMIT=512
+    working_dir: /soc_proto
+    command: "python -m proto_module.document_layout_analysis.server"
+    
+  md_detect_checkbox:
+    image: vnpff_module_env-27022024-2.0.0 
+    ports:
+      - "5005:80"    
+    volumes:
+      - ./:/soc_proto
+    environment:
+      - CUDA_VISIBLE_DEVICES=""
+      - GPU_LIMIT=512
+    working_dir: /soc_proto
+    command: "python -m proto_module.checkbox.server"
+
+  vn_table_reconstruction:
+    image: vnpff_module_env-27022024-2.0.0 
+    ports:
+      - "5006:80"    
+    volumes:
+      - ./:/soc_proto
+    environment:
+      - CUDA_VISIBLE_DEVICES=0
+      - GPU_LIMIT=512
+    working_dir: /soc_proto
+    command: "python -m proto_module.vn_table_reconstruction.server"
+
+  stamp_removal:
+    image: vnpff_module_env-27022024-2.0.0 
+    ports:
+      - "5007:80"    
+    volumes:
+      - ./:/soc_proto
+    environment:
+      - CUDA_VISIBLE_DEVICES=""
+      - GPU_LIMIT=512
+    working_dir: /soc_proto
+    command: "python -m proto_module.stamps_removal.server"

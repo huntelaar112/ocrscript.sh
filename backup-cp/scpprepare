@@ -1,0 +1,58 @@
+#!/bin/bash
+
+#use: scpprepare [/path/to/dir/file1] [/path/to/dir/file2] ...
+
+#script: cp all file/dir to /tmp/ocrData/data --> zip data folder to data.zip --> rm data folder
+
+set -e
+done=no
+datapath="/tmp/ocrData/"
+username=""
+
+[[ ${1} = "-h" ]] && {
+  echo "Usage: scpprepare [/path/to/dir/file1] [/path/to/dir/file2] ...
+"
+  exit 0
+}
+
+source $(which logshell)
+
+declare -a listpath
+#for ((i = 0; i < $#; i++)); do
+#  index=$(($i + 1))
+#  listpath+="${index} "
+#done
+
+[ "$#" -eq 0 ] && {
+  log-error "Missing input argument (path to file/directory)."
+  exit 1
+} || {
+  listpath=("$@")
+}
+
+[ -d ${datapath} ] && {
+  rm -rf ${datapath}/*
+  log-info "Deleted content of ${datapath}."
+} || {
+  mkdir -p ${datapath}
+  log-info "Created ${datapath}."
+}
+
+#mkdir -p "${datapath}/data"
+
+#log-info "Copy data to ${datapath}/data..."
+#for i in "${listpath[@]}"; do
+  #echo -n  "${i} "
+#  cp -r ${i} "${datapath}/data"
+#done
+
+currentpath=$PWD
+#cd $datapath
+zip -9 -r "${datapath}data.zip" "${listpath[@]}"
+log-info "Done zipping data."
+#rm -rf "./data"
+chown stackops "${datapath}data.zip"
+
+#cd $currentpath
+done=yes
+

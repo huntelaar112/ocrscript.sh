@@ -1,0 +1,153 @@
+[[Containers]]
+Name = "jppff"
+State = {Running = true}#[false]true
+[Containers.env]
+VHOST = 'jppff.smartocr.vn'
+DISABLEGNVHOST = 'true'
+UNAME = 'jppffsmartocrvn'
+
+[[Containers]]
+Name = "jphff"
+State = {Running = true}#[false]true
+[Containers.env]
+VHOST = 'jphff.smartocr.vn'
+DISABLEGNVHOST = 'true'
+UNAME = 'jphffsmartocrvn'
+
+[[Containers]]
+Name = "mynumber"
+State = {Running = true}#[false]true
+[Containers.env]
+VHOST = 'mynumber.smartocr.vn'
+DISABLEGNVHOST = 'true'
+UNAME = 'mynumbersmartocrvn'
+
+[[Containers]]
+Name = "jppp"
+State = {Running = true}#[false]true
+[Containers.env]
+VHOST = 'jppp.smartocr.vn'
+DISABLEGNVHOST = 'true'
+UNAME = 'jpppsmartocrvn'
+
+[[Containers]]
+Name = "dlicjp"
+State = {Running = true}#[false]true
+[Containers.env]
+VHOST = 'dlic.smartocr.vn'
+DISABLEGNVHOST = 'true'
+UNAME = 'dlicsmartocrvn'
+
+[[Containers]]
+Name = "ins"
+State = {Running = true}#[false]true
+[Containers.env]
+VHOST = 'ins.smartocr.vn'
+DISABLEGNVHOST = 'true'
+UNAME = 'inssmartocrvn'
+
+[[Containers]]
+Name = "jrc"
+State = {Running = true}#[false]true
+[Containers.env]
+VHOST = 'jrc.smartocr.vn'
+DISABLEGNVHOST = 'true'
+UNAME = 'jrcsmartocrvn'
+
+######### SERVER BLOCK ##################################
+[[Containers]]
+Name = "jpffstg"
+State = {Running = true}#[false]true
+[Containers.env]
+VPROTO = "http"
+HTTPS_METHOD = 'redirect' #[noredirect], redirect, nohttps, nohttp
+VHOST = 'jpffstg.smartocr.net'
+DISABLEGENUPSTREAM = 'true'
+#DPHVHOST = 'true'
+#EWAF = 'true'
+#ISVHOSTLOOPBACK= "true"
+VPORT = '80' #prioritize than Addresses.Port
+CERNAME = 'smartocrnet'
+
+VPATHDESTS = """/jphff/,UN:jphffsmartocrvn
+|/jppff/,UN:jppffsmartocrvn"""
+
+[[Containers]]
+Name = "jpppstg"
+State = {Running = true}#[false]true
+[Containers.env]
+VPROTO = "http"
+HTTPS_METHOD = 'redirect' #[noredirect], redirect, nohttps, nohttp
+VHOST = 'ppstg.smartocr.net'
+DISABLEGENUPSTREAM = 'true'
+#DPHVHOST = 'true'
+#EWAF = 'true'
+#ISVHOSTLOOPBACK= "true"
+VPORT = '80' #prioritize than Addresses.Port
+CERNAME = 'smartocrnet'
+
+VPATHDESTS = """/pp/,UN:jpppsmartocrvn"""
+
+[[Containers]]
+Name = "dlicjp"
+State = {Running = true}#[false]true
+[Containers.env]
+VPROTO = "http"
+HTTPS_METHOD = 'redirect' #[noredirect], redirect, nohttps, nohttp
+VHOST = 'dlicstg.smartocr.net'
+DISABLEGENUPSTREAM = 'true'
+#DPHVHOST = 'true'
+#EWAF = 'true'
+#ISVHOSTLOOPBACK= "true"
+VPORT = '80' #prioritize than Addresses.Port
+CERNAME = 'smartocrnet'
+
+VPATHDESTS = """/dlic/,UN:dlicsmartocrvn"""
+
+[[Containers]]
+Name = "mynumberjp"
+State = {Running = true}#[false]true
+[Containers.env]
+VPROTO = "http"
+HTTPS_METHOD = 'redirect' #[noredirect], redirect, nohttps, nohttp
+VHOST = 'mystg.smartocr.net'
+DISABLEGENUPSTREAM = 'true'
+#DPHVHOST = 'true'
+#EWAF = 'true'
+#ISVHOSTLOOPBACK= "true"
+VPORT = '80' #prioritize than Addresses.Port
+CERNAME = 'smartocrnet'
+
+VPATHDESTS = """/mynumber/,UN:mynumbersmartocrvn"""
+
+[[Containers]]
+Name = "insjp"
+State = {Running = true}#[false]true
+[Containers.env]
+VPROTO = "http"
+HTTPS_METHOD = 'redirect' #[noredirect], redirect, nohttps, nohttp
+VHOST = 'insstg.smartocr.net'
+DISABLEGENUPSTREAM = 'true'
+#DPHVHOST = 'true'
+#EWAF = 'true'
+#ISVHOSTLOOPBACK= "true"
+VPORT = '80' #prioritize than Addresses.Port
+CERNAME = 'smartocrnet'
+
+VPATHDESTS = """/ins/,UN:inssmartocrvn"""
+
+[[Containers]]
+Name = "jrcjp"
+State = {Running = true}#[false]true
+[Containers.env]
+VPROTO = "http"
+HTTPS_METHOD = 'redirect' #[noredirect], redirect, nohttps, nohttp
+VHOST = 'jrcstg.smartocr.net'
+DISABLEGENUPSTREAM = 'true'
+#DPHVHOST = 'true'
+#EWAF = 'true'
+#ISVHOSTLOOPBACK= "true"
+VPORT = '80' #prioritize than Addresses.Port
+CERNAME = 'smartocrnet'
+
+VPATHDESTS = """/jrc/,UN:jrcsmartocrvn"""
